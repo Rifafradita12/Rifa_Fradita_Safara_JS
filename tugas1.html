@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar JavaScript | NFA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #cbd5e1;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            width: 220px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .card label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .card input {
+            width: 100%;
+            padding: 6px;
+            border-radius: 6px;
+            border: none;
+            margin-top: 4px;
+        }
+
+        .card button {
+            margin-top: 15px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #3b82f6;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rifa Fradita Safara</h1>
+    <p class="subtitle">Menghitung Luas Persegi Panjang, Bujur Sangkar, dan Segitiga</p>
+
+    <div class="container">
+        <!-- Persegi Panjang -->
+        <div class="card">
+            <h2>Persegi Panjang</h2>
+            <label>Panjang</label>
+            <input type="number" id="pjg" value="12">
+            <label>Lebar</label>
+            <input type="number" id="lbr" value="12">
+            <button onclick="hitungPersegiPanjang()">Hitung</button>
+            <div class="result" id="hasilPP">Luas: </div>
+        </div>
+
+        <!-- Bujur Sangkar -->
+        <div class="card">
+            <h2>Bujur Sangkar</h2>
+            <label>Sisi</label>
+            <input type="number" id="sisi" value="23">
+            <button onclick="hitungBujurSangkar()">Hitung</button>
+            <div class="result" id="hasilBS">Luas: </div>
+        </div>
+
+        <!-- Segitiga -->
+        <div class="card">
+            <h2>Segitiga</h2>
+            <label>Alas</label>
+            <input type="number" id="alas" value="4">
+            <label>Tinggi</label>
+            <input type="number" id="tinggi" value="6">
+            <button onclick="hitungSegitiga()">Hitung</button>
+            <div class="result" id="hasilSegitiga">Luas: </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi hitung luas persegi panjang
+        function hitungPersegiPanjang() {
+            let pjg = Number(document.getElementById("pjg").value);
+            let lbr = Number(document.getElementById("lbr").value);
+            let luas = pjg * lbr;
+            document.getElementById("hasilPP").innerText = "Luas: " + luas;
+        }
+
+        // Fungsi hitung luas bujur sangkar
+        function hitungBujurSangkar() {
+            let sisi = Number(document.getElementById("sisi").value);
+            let luas = sisi * sisi;
+            document.getElementById("hasilBS").innerText = "Luas: " + luas;
+        }
+
+        // Fungsi hitung luas segitiga
+        function hitungSegitiga() {
+            let alas = Number(document.getElementById("alas").value);
+            let tinggi = Number(document.getElementById("tinggi").value);
+            let luas = 0.5 * alas * tinggi;
+            document.getElementById("hasilSegitiga").innerText = "Luas: " + luas;
+        }
+    </script>
+</body>
+</html>
