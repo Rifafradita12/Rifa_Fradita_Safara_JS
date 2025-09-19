@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 2 - Struktur Kendali</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9fafb;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            background: white;
+        }
+        thead {
+            background: #2563eb;
+            color: white;
+        }
+        thead th {
+            padding: 12px;
+            font-size: 14px;
+        }
+        tbody td, tfoot td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        tbody tr:nth-child(even) {
+            background: #f1f5f9;
+        }
+        tfoot {
+            background: #e2e8f0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Data Pegawai</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nama Pegawai</th>
+                <th>Umur</th>
+                <th>Jabatan</th>
+                <th>Status</th>
+                <th>Gaji Pokok</th>
+                <th>Tunjangan Jabatan</th>
+                <th>BPJS</th>
+                <th>Tunjangan Keluarga</th>
+            </tr>
+        </thead>
+        <tbody id="data-pegawai">
+            <!-- data ditampilkan via JavaScript -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7">Total Gaji</td>
+                <td id="totalGaji"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        // data pegawai
+        let nama = "Dodi Prayodi";
+        let umur = 25;
+        let jabatan = "Manajer";
+        let status = "Menikah";
+
+        // gaji pokok pakai if
+        let gapok = 0;
+        if (jabatan == "Manajer") {
+            gapok = 15000000;
+        } else if (jabatan == "Asisten Manajer") {
+            gapok = 10000000;
+        } else if (jabatan == "Staff") {
+            gapok = 5000000;
+        } else {
+            gapok = 0;
+        }
+
+        // tunjangan jabatan 15% gapok
+        let tJabatan = 0.15 * gapok;
+
+        // bpjs 10% gapok
+        let bpjs = 0.10 * gapok;
+
+        // tunjangan keluarga pakai ternary
+        let tKeluarga = (status == "Menikah") ? 0.20 * gapok : 0;
+
+        // total gaji
+        let total = gapok + tJabatan + bpjs + tKeluarga;
+
+        // tampilkan data pegawai
+        document.getElementById("data-pegawai").innerHTML = `
+            <tr>
+                <td>${nama}</td>
+                <td>${umur}</td>
+                <td>${jabatan}</td>
+                <td>${status}</td>
+                <td>Rp ${gapok.toLocaleString()}</td>
+                <td>Rp ${tJabatan.toLocaleString()}</td>
+                <td>Rp ${bpjs.toLocaleString()}</td>
+                <td>Rp ${tKeluarga.toLocaleString()}</td>
+            </tr>
+        `;
+
+        document.getElementById("totalGaji").innerText = "Rp " + total.toLocaleString();
+    </script>
+</body>
+</html>
