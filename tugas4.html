@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Sewa Kendaraan</title>
+</head>
+<body>
+  <h2>Form Sewa Kendaraan</h2>
+  <input type="text" id="nama" placeholder="Nama">
+  <input type="text" id="telepon" placeholder="No. Telepon">
+  <select id="jenis">
+    <option value="mobil">Mobil</option>
+    <option value="motor">Motor</option>
+    <option value="bus">Bus</option>
+  </select>
+  <button onclick="sewa()">Sewa</button>
+
+  <h3>Daftar Penyewa</h3>
+  <ul id="daftar"></ul>
+
+  <script>
+    // Superclass
+    class Kendaraan {
+      constructor(nama) {
+        this.nama = nama;
+      }
+      info() {
+        return this.nama;
+      }
+    }
+
+    class Mobil extends Kendaraan {
+      info() { return "Mobil " + this.nama; }
+    }
+    class Motor extends Kendaraan {
+      info() { return "Motor " + this.nama; }
+    }
+    class Bus extends Kendaraan {
+      info() { return "Bus " + this.nama; }
+    }
+
+    class Pelanggan {
+      constructor(nama, telp, kendaraan) {
+        this.nama = nama;
+        this.telp = telp;
+        this.kendaraan = kendaraan;
+      }
+      tampil() {
+        return `${this.nama} (${this.telp}) sewa ${this.kendaraan.info()}`;
+      }
+    }
+
+    let daftar = [];
+
+    function sewa() {
+      let n = document.getElementById("nama").value;
+      let t = document.getElementById("telepon").value;
+      let j = document.getElementById("jenis").value;
+
+      if (n && t) {
+        let k;
+        if (j === "mobil") k = new Mobil("Avanza");
+        else if (j === "motor") k = new Motor("Vario");
+        else k = new Bus("Pariwisata");
+
+        let p = new Pelanggan(n, t, k);
+        daftar.push(p);
+        tampilkan();
+      }
+    }
+
+    function tampilkan() {
+      let ul = document.getElementById("daftar");
+      ul.innerHTML = "";
+      daftar.forEach(p => {
+        let li = document.createElement("li");
+        li.textContent = p.tampil();
+        ul.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
