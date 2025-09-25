@@ -7,7 +7,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
-      background: #f5f5f5;
+      background: #f7f7f7;
     }
     h2 {
       color: #333;
@@ -18,11 +18,12 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       margin-bottom: 15px;
-      width: 320px;
+      width: 300px;
     }
-    input, select, button {
-      padding: 6px;
+    input, button {
       margin: 5px 0;
+      padding: 6px;
+      width: 95%;
       border: 1px solid #bbb;
       border-radius: 4px;
     }
@@ -30,6 +31,7 @@
       background: #3498db;
       color: white;
       cursor: pointer;
+      width: auto;
     }
     button:hover {
       background: #2980b9;
@@ -37,11 +39,12 @@
     ul {
       list-style: none;
       padding: 0;
+      margin-top: 15px;
     }
     li {
       background: #fff;
-      margin: 4px 0;
-      padding: 6px;
+      padding: 8px;
+      margin-bottom: 6px;
       border: 1px solid #ddd;
       border-radius: 4px;
     }
@@ -49,59 +52,74 @@
 </head>
 <body>
   <h2>Manajemen Produk</h2>
+
+  <!-- Form tambah produk -->
   <div class="form-box">
-    <input type="text" id="produk" placeholder="Nama Produk"><br>
-    <button id="tambahBtn">Tambah</button>
-    <button id="hapusBtn">Hapus</button>
-    <button id="tampilBtn">Tampilkan</button>
+    <input type="number" id="idProduk" placeholder="ID Produk">
+    <input type="text" id="namaProduk" placeholder="Nama Produk">
+    <input type="number" id="hargaProduk" placeholder="Harga Produk">
+    <button onclick="eventHandler.tambah()">Tambah Produk</button>
   </div>
 
-  <h3>Daftar Produk</h3>
+  <button onclick="eventHandler.tampil()">Tampilkan Produk</button>
+  <button onclick="eventHandler.hapus()">Hapus Produk</button>
+
   <ul id="daftarProduk"></ul>
 
   <script>
-    // Data produk awal
-    let produkList = ["Laptop", "Mouse", "Keyboard", "Headset", "Monitor"];
+    // **Data Produk** (minimal 5)
+    let produkList = [
+      { id: 1, nama: "Laptop", harga: 12000000 },
+      { id: 2, nama: "Smartphone", harga: 5000000 },
+      { id: 3, nama: "Keyboard", harga: 300000 },
+      { id: 4, nama: "Mouse", harga: 150000 },
+      { id: 5, nama: "Monitor", harga: 2000000 }
+    ];
 
-    // Fungsi tampilkan produk (Rest parameter)
-    function tampilkanProduk(...items) {
+    // Menambahkan Produk dengan Spread Operator
+    function tambahProduk(id, nama, harga) {
+      produkList = [...produkList, { id, nama, harga }];
+    }
+
+    // Menghapus Produk dengan Rest Parameter
+    function hapusProduk(...id) {
+      produkList = produkList.filter(p => !id.includes(p.id));
+    }
+
+    // Menampilkan Produk dengan Destructuring
+    function tampilkanProduk() {
       const ul = document.getElementById("daftarProduk");
       ul.innerHTML = "";
-      items.forEach(item => {
+      produkList.forEach(({ id, nama, harga }) => {
         const li = document.createElement("li");
-        li.textContent = item;
+        li.textContent = `${id}. ${nama} - Rp${harga}`;
         ul.appendChild(li);
       });
     }
 
-    // Tambah produk (Spread operator)
-    function tambahProduk() {
-      const input = document.getElementById("produk").value;
-      if (input) {
-        produkList = [...produkList, input];
-        document.getElementById("produk").value = "";
-        alert(input + " berhasil ditambahkan!");
-      } else {
-        alert("Nama produk tidak boleh kosong!");
-      }
-    }
+    // Event handler
+    const eventHandler = {
+      tampil: () => tampilkanProduk(),
+      tambah: () => {
+        const id = parseInt(document.getElementById("idProduk").value);
+        const nama = document.getElementById("namaProduk").value;
+        const harga = parseInt(document.getElementById("hargaProduk").value);
 
-    // Hapus produk terakhir (Destructuring)
-    function hapusProduk() {
-      const [...baru] = produkList;
-      if (baru.length > 0) {
-        const hapus = baru.pop();
-        produkList = [...baru];
-        alert(hapus + " berhasil dihapus!");
-      } else {
-        alert("Tidak ada produk untuk dihapus");
+        if (id && nama && harga) {
+          tambahProduk(id, nama, harga);
+          alert(`Produk ${nama} berhasil ditambahkan!`);
+          document.getElementById("idProduk").value = "";
+          document.getElementById("namaProduk").value = "";
+          document.getElementById("hargaProduk").value = "";
+        } else {
+          alert("Isi semua data produk!");
+        }
+      },
+      hapus: () => {
+        hapusProduk(2); // contoh hapus ID 2
+        alert("Produk dihapus!");
       }
-    }
-
-    // Event Listener
-    document.getElementById("tambahBtn").addEventListener("click", tambahProduk);
-    document.getElementById("hapusBtn").addEventListener("click", hapusProduk);
-    document.getElementById("tampilBtn").addEventListener("click", () => tampilkanProduk(...produkList));
+    };
   </script>
 </body>
 </html>
