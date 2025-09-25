@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tugas 5 - Manajemen Produk</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    h2 {
+      color: #333;
+    }
+    .form-box {
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      width: 320px;
+    }
+    input, select, button {
+      padding: 6px;
+      margin: 5px 0;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      margin: 4px 0;
+      padding: 6px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Manajemen Produk</h2>
+  <div class="form-box">
+    <input type="text" id="produk" placeholder="Nama Produk"><br>
+    <button id="tambahBtn">Tambah</button>
+    <button id="hapusBtn">Hapus</button>
+    <button id="tampilBtn">Tampilkan</button>
+  </div>
+
+  <h3>Daftar Produk</h3>
+  <ul id="daftarProduk"></ul>
+
+  <script>
+    // Data produk awal
+    let produkList = ["Laptop", "Mouse", "Keyboard", "Headset", "Monitor"];
+
+    // Fungsi tampilkan produk (Rest parameter)
+    function tampilkanProduk(...items) {
+      const ul = document.getElementById("daftarProduk");
+      ul.innerHTML = "";
+      items.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+    }
+
+    // Tambah produk (Spread operator)
+    function tambahProduk() {
+      const input = document.getElementById("produk").value;
+      if (input) {
+        produkList = [...produkList, input];
+        document.getElementById("produk").value = "";
+        alert(input + " berhasil ditambahkan!");
+      } else {
+        alert("Nama produk tidak boleh kosong!");
+      }
+    }
+
+    // Hapus produk terakhir (Destructuring)
+    function hapusProduk() {
+      const [...baru] = produkList;
+      if (baru.length > 0) {
+        const hapus = baru.pop();
+        produkList = [...baru];
+        alert(hapus + " berhasil dihapus!");
+      } else {
+        alert("Tidak ada produk untuk dihapus");
+      }
+    }
+
+    // Event Listener
+    document.getElementById("tambahBtn").addEventListener("click", tambahProduk);
+    document.getElementById("hapusBtn").addEventListener("click", hapusProduk);
+    document.getElementById("tampilBtn").addEventListener("click", () => tampilkanProduk(...produkList));
+  </script>
+</body>
+</html>
